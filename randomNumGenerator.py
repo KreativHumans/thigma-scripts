@@ -85,20 +85,20 @@ spam = pyperclip.paste()
 #Saving keys to respective files
 
 #File which should be imported to moodle
-savetoFile("newEnrolmentKeystoMoodle.csv","w","groupname,enrolmentkey\n"+generatedCompleteString)
+savetoFile("newKeys/newEnrolmentKeystoMoodle.csv","w","groupname,enrolmentkey\n"+generatedCompleteString)
 
 
 #File which should be given to Thigma
-savetoFile("newEnrolmentKeystoThigma.csv","w",generatedKeysString)
+savetoFile("newKeys/newEnrolmentKeystoThigma.csv","w",generatedKeysString)
 
 
 
 #Backup File of keys imported to moodle
-savetoFile("backupnewEnrolmentKeystoMoodle.csv","a",generatedCompleteString)
+savetoFile("backupKeys/backupnewEnrolmentKeystoMoodle.csv","a",generatedCompleteString)
 
 
 #Backup File of keys given to Thigma
-savetoFile("backupnewEnrolmentKeystoThigma.csv","w",generatedKeysString)
+savetoFile("backupKeys/backupnewEnrolmentKeystoThigma.csv","w",generatedKeysString)
 
 
 
