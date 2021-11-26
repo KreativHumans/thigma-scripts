@@ -10,6 +10,10 @@ confusables="0O1IL"
 import pyperclip
 import random
 import string
+import os
+
+# Get the current working directory
+cwd = os.getcwd()+"/"
 
 #--------------------character lists-------------------
 chars=string.digits+string.ascii_uppercase
@@ -25,7 +29,7 @@ def id_generator(size=15,chars=string.digits+string.ascii_uppercase):
 
 def savetoFile(filename,method,stringtoWrite):
     "Saves data to a file and closes the file"
-    newEnrolmentKeys=open(filename,method)
+    newEnrolmentKeys=open(cwd+filename,method)
     newEnrolmentKeys.write(stringtoWrite)
     newEnrolmentKeys.close()
     return
@@ -33,9 +37,9 @@ def savetoFile(filename,method,stringtoWrite):
 
 
 #String which are printed to the user
-string1="Enter the length of a generated key (multiple of 3 is great)       : "
-string2="Enter how many keys you need                                       : "
-string3="Enter the name of the Course (at least 5 characters without comma) : "
+string1="Enter the length of a generated key (multiple of 3 is great/ 15 is recommended)    : "
+string2="Enter how many keys you need                                                       : "
+string3="Enter the name of the Course (at least 5 characters without comma)                 : "
 
 #Input character length of a key
 length=False
@@ -99,3 +103,5 @@ savetoFile("backupnewEnrolmentKeystoThigma.csv","w",generatedKeysString)
 
 
 print("\n"+"\n"+"\n"+generatedCompleteString)
+
+print(f"\nSaved {howMany} keys to following files\n"+cwd+"newEnrolmentKeystoMoodle.csv\n"+cwd+"newEnrolmentKeystoThigma.csv\n"+cwd+"backupnewEnrolmentKeystoMoodle.csv\n"+cwd+"backupnewEnrolmentKeystoThigma.csv")
