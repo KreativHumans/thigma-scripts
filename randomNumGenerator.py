@@ -1,107 +1,112 @@
-#Delimiting Character limit
-delimiter=3
+try:
+    #Delimiting Character limit
+    delimiter=3
 
-#Confusing charcters list
-confusables="0O1IL"
-
-
-
-#---------------------libraries-----------------------
-import pyperclip
-import random
-import string
-import os
-
-# Get the current working directory
-cwd = os.getcwd()+"/"
-
-#--------------------character lists-------------------
-chars=string.digits+string.ascii_uppercase
-
-#removing confusables
-for letter in confusables:
-    chars.replace(letter,"")
-
-#Enrolment Key Generator
-def id_generator(size=15,chars=string.digits+string.ascii_uppercase):
-    "Enrolment Key Generator"
-    return "-".join(''.join(random.SystemRandom().choice(chars) for _ in range(delimiter)) for k in range(length//delimiter))
-
-def savetoFile(filename,method,stringtoWrite):
-    "Saves data to a file and closes the file"
-    newEnrolmentKeys=open(cwd+filename,method)
-    newEnrolmentKeys.write(stringtoWrite)
-    newEnrolmentKeys.close()
-    return
-    
+    #Confusing charcters list
+    confusables="0O1IL"
 
 
-#String which are printed to the user
-string1="Enter the length of a generated key (multiple of 3 is great/ 15 is recommended)    : "
-string2="Enter how many keys you need                                                       : "
-string3="Enter the name of the Course (at least 5 characters without comma)                 : "
 
-#Input character length of a key
-length=False
-while not(length):
-    try:
-        length=int(input(string1))
-        if length%delimiter!=0 or length<10:
-            print("Please enter a multiple of 3 greater than 10.")
-            length=False
-    except ValueError:
-        print("Please enter a valid integer.")
+    #---------------------libraries-----------------------
+    import pyperclip
+    import random
+    import string
+    import os
 
-#Input the number of Keys
-howMany=False
-while not(howMany):
-    try:
-        howMany=int(input(string2))
-    except ValueError:
-        print("Please enter a valid integer.")
+    # Get the current working directory
+    cwd = os.getcwd()+"/"
 
+    #--------------------character lists-------------------
+    chars=string.digits+string.ascii_uppercase
 
-#input the course name    
-courseName=""
-while len(courseName)<5:
-    try:
-        courseName=input(string3).strip().replace(",","")
-    except ValueError:
-        print("Please enter a valid Course Name.")
+    #removing confusables
+    for letter in confusables:
+        chars.replace(letter,"")
+
+    #Enrolment Key Generator
+    def id_generator(size=15,chars=string.digits+string.ascii_uppercase):
+        "Enrolment Key Generator"
+        return "-".join(''.join(random.SystemRandom().choice(chars) for _ in range(delimiter)) for k in range(length//delimiter))
+
+    def savetoFile(filename,method,stringtoWrite):
+        "Saves data to a file and closes the file"
+        newEnrolmentKeys=open(cwd+filename,method)
+        newEnrolmentKeys.write(stringtoWrite)
+        newEnrolmentKeys.close()
+        return
         
 
 
+    #String which are printed to the user
+    string1="Enter the length of a generated key (multiple of 3 is great/ 15 is recommended)    : "
+    string2="Enter how many keys you need                                                       : "
+    string3="Enter the name of the Course (at least 5 characters without comma)                 : "
 
-# Generating Keys 
-generatedKeys=[id_generator(length,chars) for _ in range(howMany)]
-generatedKeysString="\n".join(generatedKeys)
-generatedCompleteString="\n".join([f"{courseName} Student {str(index+1).zfill(5)},"+generatedKey for index,generatedKey in enumerate(generatedKeys)])
+    #Input character length of a key
+    length=False
+    while not(length):
+        try:
+            length=int(input(string1))
+            if length%delimiter!=0 or length<10:
+                print("Please enter a multiple of 3 greater than 10.")
+                length=False
+        except ValueError:
+            print("Please enter a valid integer.")
 
-#Copying keys to clipboard, just in case
-pyperclip.copy(generatedKeysString)
-spam = pyperclip.paste()
-
-
-#Saving keys to respective files
-
-#File which should be imported to moodle
-savetoFile("newKeys/newEnrolmentKeystoMoodle.csv","w","groupname,enrolmentkey\n"+generatedCompleteString)
-
-
-#File which should be given to Thigma
-savetoFile("newKeys/newEnrolmentKeystoThigma.csv","w",generatedKeysString)
-
-
-
-#Backup File of keys imported to moodle
-savetoFile("backupKeys/backupnewEnrolmentKeystoMoodle.csv","a",generatedCompleteString)
-
-
-#Backup File of keys given to Thigma
-savetoFile("backupKeys/backupnewEnrolmentKeystoThigma.csv","w",generatedKeysString)
+    #Input the number of Keys
+    howMany=False
+    while not(howMany):
+        try:
+            howMany=int(input(string2))
+        except ValueError:
+            print("Please enter a valid integer.")
 
 
+    #input the course name    
+    courseName=""
+    while len(courseName)<5:
+        try:
+            courseName=input(string3).strip().replace(",","")
+        except ValueError:
+            print("Please enter a valid Course Name.")
+            
 
-print("\n"+"\n"+"\n"+generatedCompleteString)
 
-print(f"\nSaved {howMany} keys to following files\n"+cwd+"newEnrolmentKeystoMoodle.csv\n"+cwd+"newEnrolmentKeystoThigma.csv\n"+cwd+"backupnewEnrolmentKeystoMoodle.csv\n"+cwd+"backupnewEnrolmentKeystoThigma.csv")
+
+    # Generating Keys 
+    generatedKeys=[id_generator(length,chars) for _ in range(howMany)]
+    generatedKeysString="\n".join(generatedKeys)
+    generatedCompleteString="\n".join([f"{courseName} Student {str(index+1).zfill(5)},"+generatedKey for index,generatedKey in enumerate(generatedKeys)])
+
+    #Copying keys to clipboard, just in case
+    pyperclip.copy(generatedKeysString)
+    spam = pyperclip.paste()
+
+
+    #Saving keys to respective files
+
+    #File which should be imported to moodle
+    savetoFile("newKeys/newEnrolmentKeystoMoodle.csv","w","groupname,enrolmentkey\n"+generatedCompleteString)
+
+
+    #File which should be given to Thigma
+    savetoFile("newKeys/newEnrolmentKeystoThigma.csv","w",generatedKeysString)
+
+
+
+    #Backup File of keys imported to moodle
+    savetoFile("backupKeys/backupnewEnrolmentKeystoMoodle.csv","a",generatedCompleteString)
+
+
+    #Backup File of keys given to Thigma
+    savetoFile("backupKeys/backupnewEnrolmentKeystoThigma.csv","w",generatedKeysString)
+
+
+
+    print("\n"+"\n"+"\n"+generatedCompleteString)
+
+    print(f"\nSaved {howMany} keys to following files\n"+cwd+"newKeys/newEnrolmentKeystoMoodle.csv\n"+cwd+"newKeys/newEnrolmentKeystoThigma.csv\n"+cwd+"backupKeys/backupnewEnrolmentKeystoMoodle.csv\n"+cwd+"backupKeys/backupnewEnrolmentKeystoThigma.csv")
+    x=input("Press any key to exit the program...")
+except Exception as e:
+    print(e)
+    x=input("Press any key to exit the program...")
