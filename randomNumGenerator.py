@@ -34,6 +34,11 @@ try:
         global filelocation
         filelocation=os.path.join(place,filename)
         filelocation.replace("\\\\","\\")
+        try:
+            os.mkdir(place)
+            print("Directory didn't existed and has been created.")
+        except FileExistsError:
+            pass
         newEnrolmentKeys=open(filelocation,method)
         newEnrolmentKeys.write(stringtoWrite)
         newEnrolmentKeys.close()
@@ -79,7 +84,9 @@ try:
 
     # Generating Keys 
     generatedKeys=[id_generator(length,chars) for _ in range(howMany)]
-    generatedKeysString="\n".join(generatedKeys)
+#    generatedKeysString="\n".join(generatedKeys)
+    
+    generatedKeysString="\n".join([f"{courseName} Student {str(index+1).zfill(5)}\n"+generatedKey for index,generatedKey in enumerate(generatedKeys)])
     generatedCompleteString="\n".join([f"{courseName} Student {str(index+1).zfill(5)},"+generatedKey for index,generatedKey in enumerate(generatedKeys)])
 
     #Copying keys to clipboard, just in case
@@ -109,7 +116,7 @@ try:
 
     print("\n"+"\n"+"\n"+generatedCompleteString)
 
-    print(f"\nSaved {howMany} keys to following files\n"+cwd+"newKeys/newEnrolmentKeystoMoodle.csv\n"+cwd+"newKeys/newEnrolmentKeystoThigma.csv\n"+cwd+"backupKeys/backupnewEnrolmentKeystoMoodle.csv\n"+cwd+"backupKeys/backupnewEnrolmentKeystoThigma.csv")
+    print(f"\nSaved {howMany} keys to following files\n"+cwd+"/newKeys/newEnrolmentKeystoMoodle.csv\n"+cwd+"/newKeys/newEnrolmentKeystoThigma.csv\n"+cwd+"/backupKeys/backupnewEnrolmentKeystoMoodle.csv\n"+cwd+"/backupKeys/backupnewEnrolmentKeystoThigma.csv")
     x=input("Press any key to exit the program...")
 except Exception as e:
     print("There was an error while running the program.")
